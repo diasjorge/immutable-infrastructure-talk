@@ -1,0 +1,15 @@
+ul.no-bullets {
+  list-style-type: none;
+}
+
+.lefty {
+  text-align: left;
+}
+
+.title h2 {
+  font-size: 3.5em;
+}
+
+.reveal {
+//  font-family: Helvetica;
+}
