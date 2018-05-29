@@ -13,3 +13,11 @@ ul.no-bullets {
 .reveal {
 //  font-family: Helvetica;
 }
+
+.white {
+  color: white;
+}
+
+.white h2 {
+  color: white;
+}

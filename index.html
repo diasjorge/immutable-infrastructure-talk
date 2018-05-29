@@ -91,7 +91,7 @@
                     </p>
                 </section>
 
-                <section>
+                <section data-transition="zoom-in fade-out">
                     <h2>Paradigm</h2>
                     <p>
                         Components are replaced rather than changed
@@ -101,49 +101,21 @@
                     </p>
                 </section>
 
-                <section>
-                    <h2>Pets vs Cattle</h2>
-                    <blockquote cite="http://cloudscaling.com/blog/cloud-computing/the-history-of-pets-vs-cattle/">
-                        &ldquo;
-                        In the old way of doing things, we treat our servers like pets, for example Bob the mail server. If Bob goes down, it’s all hands on deck. The CEO can’t get his email and it’s the end of the world. In the new way, servers are numbered, like cattle in a herd. For example, www001 to www100. When one server goes down, it’s taken out back, shot, and replaced on the line.
-                        &rdquo;
-                    </blockquote>
-                    <small>Randy Bias</small>
-                </section>
-
                 <section class="">
                     <h2> The problem with traditional infrastructure </h2>
                 </section>
-
-                <section>
-                    <ul>
-                        <li>Code and runtime are separate</li>
-                        <li>Configuration Drift</li>
-                        <li>Manual changes and hacks leftovers</li>
-                        <li>Running different versions of OS and packages</li>
-                        <li>Entropy caused by many updates</li>
-                    </ul>
-                </section>
-
-                <section>
-                    <ul>
-                        <li>Many points of failure</li>
-                        <li>Failure events are costly and become fire drills</li>
-                        <li>Services behave in unpredictable ways </li>
-                        <li>Debugging the runtime is hard</li>
-                    </ul>
-                </section>
+                <section data-background-image="images/problems.svg" data-background-size="contain"></section>
 
                 <section class="lefty title">
                     <h2> How do we <br/>solve this? </h2>
                 </section>
 
-                <section>
+                <section data-transition="zoom-in concave-out">
                     <h2> A new challenge </h2>
                 </section>
 
                 <section>
-                    <ul>
+                    <ul class="no-bullets">
                         <li>New tools are needed to build the system</li>
                         <li>High initial costs for automation</li>
                         <li>Architecture changes for applications</li>
@@ -154,29 +126,38 @@
                     <h2> Application Architecture </h2>
                 </section>
 
-                <section>
+                <section class="lefty white" data-background-image="images/12-1.jpg" data-background-position="left">
                     <h2> 12Factor APP </h2>
-                    <ul>
-                        <li> A methodology for building modern, scalable, maintainable software-as-a-service apps</li>
-                        <li>General guidelines for building applications</li>
-                        <li>Great ideas for working on the cloud</li>
+                    <ul class="no-bullets">
+                        <li>General guidelines for building <br/> SAAS applications</li>
+                        <li>Great ideas for working<br/> on the cloud</li>
                     </ul>
                 </section>
 
-                <section>
+                <section data-transition="fade-out">
                     <h2>Config</h2>
-                    <ul>
-                        <li>Config is everything that is likely to change between deploys</li>
+                    <p>
+                        Config is everything that is likely<br/> to change between deploys
+                    </p>
+                </section>
+
+                <section  data-transition="fade-in fade-out">
+                    <ul class="no-bullets">
                         <li>Separate your config from your code</li>
                         <li>Store config in the environment</li>
                         <li>Use environment variables</li>
                     </ul>
                 </section>
 
-                <section>
+                <section data-transition="fade-out">
                     <h2>Processes</h2>
+                    <p>
+                        Processes are stateless and share-nothing
+                    </p>
+                </section>
+
+                <section  data-transition="fade-in fade-out">
                     <ul>
-                        <li>Processes are stateless and share-nothing</li>
                         <li>Data that needs to persist must be stored in a stateful backing service</li>
                         <li>Filesystem of the process can be used as a brief, single-transaction cache</li>
                     </ul>
