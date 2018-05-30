@@ -1,4 +1,4 @@
-ul.no-bullets {
+.reveal ul {
   list-style-type: none;
 }
 
@@ -10,14 +10,25 @@ ul.no-bullets {
   font-size: 3.5em;
 }
 
-.reveal {
-//  font-family: Helvetica;
-}
-
 .white {
   color: white;
 }
 
 .white h2 {
   color: white;
+}
+
+.reveal section img {
+  margin: 0;
+  border: 0;
+  background: none;
+  box-shadow: 0 0;
+}
+
+.reveal section img.config {
+  margin-top: 2em;
+}
+
+.reveal ul.bullets {
+  list-style-type: bullets;
 }

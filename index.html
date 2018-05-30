@@ -68,7 +68,7 @@
 
                 <section>
                     <h2>Agenda</h2>
-                    <ul class="no-bullets">
+                    <ul>
                         <li>Introduction to immutable infrastructure</li>
                         <li>Implementing it in practice</li>
                         <li>Application for stateful services</li>
@@ -115,7 +115,7 @@
                 </section>
 
                 <section>
-                    <ul class="no-bullets">
+                    <ul>
                         <li>New tools are needed to build the system</li>
                         <li>High initial costs for automation</li>
                         <li>Architecture changes for applications</li>
@@ -128,7 +128,7 @@
 
                 <section class="lefty white" data-background-image="images/12-1.jpg" data-background-position="left">
                     <h2> 12Factor APP </h2>
-                    <ul class="no-bullets">
+                    <ul>
                         <li>General guidelines for building <br/> SAAS applications</li>
                         <li>Great ideas for working<br/> on the cloud</li>
                     </ul>
@@ -142,7 +142,7 @@
                 </section>
 
                 <section  data-transition="fade-in fade-out">
-                    <ul class="no-bullets">
+                    <ul>
                         <li>Separate your config from your code</li>
                         <li>Store config in the environment</li>
                         <li>Use environment variables</li>
@@ -172,39 +172,22 @@
                     </ul>
                 </section>
 
-                <section>
-                    <h2>Build, release, run</h2>
-                    <ul>
-                        <li>Strictly separate build and run stages</li>
-                        <li>Build stage - Convert code repo into executable bundle</li>
-                        <li>Release stage - Take the build and combine it with the configuration</li>
-                        <li>Run stage - Execute the application launching processes</li>
-                    </ul>
+                <section data-background-image="images/build-release-run.svg" data-background-size="95%">
                 </section>
 
-                <section>
+                <section class="pipeline">
                     <h2>Creating builds</h2>
-                    <ul>
-                        <li>Bundle your code, dependencies and system packages into a single unit</li>
-                        <li>We use packer + rpm/deb packages</li>
-                        <li>Our builds use a hardened version of amazon linux and ubuntu</li>
-                    </ul>
+                    <img src="images/pipeline.svg"/>
                 </section>
 
                 <section>
                     <h2>Releasing Code</h2>
-                    <ul>
-                        <li>Loading configuration</li>
-                        <li>Retrieve config from storage system</li>
-                        <li>We use AWS dynamodb + KMS</li>
-                        <li>We use Strongbox for managing secrets</li>
-                    </ul>
+                    <img class="config" src="images/config.svg"/>
                 </section>
 
                 <section>
-                    <h2>Releasing Code</h2>
+                    <h3>Deployment Strategies</h3>
                     <ul>
-                        <li>Deployment strategies</li>
                         <li>Rolling terminate</li>
                         <li>Blue/green deployments</li>
                         <li>Canary releases</li>
@@ -216,8 +199,8 @@
                 </section>
 
                 <section>
-                    <h2>Background</h2>
-                    <ul class="no-bullets">
+                    <h2>Context</h2>
+                    <ul>
                         <li>Storage team offers managed databases to internal teams</li>
                         <li>Small team of 5 engineers and 1 manager</li>
                         <li>10s of clusters in production</li>
@@ -379,7 +362,7 @@
 
                 <section>
                     <h2>Take aways</h2>
-                    <ul class="no-bullets">
+                    <ul>
                         <li>Immutable infrastructure is a means to an end not a goal.</li>
                         <li>It’s not about the tools it’s about the ideas.</li>
                         <li>You can implement it gradually.</li>
