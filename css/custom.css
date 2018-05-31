@@ -32,3 +32,8 @@
 .reveal ul.bullets {
   list-style-type: bullets;
 }
+
+.thankyou ul {
+  margin: 0;
+  text-align: center;
+}
