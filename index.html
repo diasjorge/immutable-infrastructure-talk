@@ -56,13 +56,10 @@
                 <section>
                     <h2>Jorge Dias</h2>
                     <p>
-                        Father, coder, polyglot, human.
+                        Father 👨‍👩‍👧‍👦 , coder 👨‍💻, polyglot 🌐, human 🤖.
                     </p>
                     <p>
                         Infrastructure engineer by Schibsted.
-                    </p>
-                    <p>
-                        Emacs user, Ruby is my favorite language.
                     </p>
                 </section>
 
@@ -101,24 +98,20 @@
                     </p>
                 </section>
 
-                <section class="">
-                    <h2> The problem with traditional infrastructure </h2>
+                <section>
+                    <h2> Traditional infrastructure (the old ways)</h2>
                 </section>
                 <section data-background-image="images/problems.svg" data-background-size="contain"></section>
 
                 <section class="lefty title">
-                    <h2> How do we <br/>solve this? </h2>
-                </section>
-
-                <section data-transition="zoom-in concave-out">
                     <h2> A new challenge </h2>
                 </section>
 
                 <section>
                     <ul>
-                        <li>New tools are needed to build the system</li>
-                        <li>High initial costs for automation</li>
-                        <li>Architecture changes for applications</li>
+                        <li>New tools are needed</li>
+                        <li>Automation is a necessity</li>
+                        <li>Architecture changes for apps</li>
                     </ul>
                 </section>
 
@@ -126,11 +119,11 @@
                     <h2> Application Architecture </h2>
                 </section>
 
-                <section class="lefty white" data-background-image="images/12-1.jpg" data-background-position="left">
+                <section>
                     <h2> 12Factor APP </h2>
                     <ul>
-                        <li>General guidelines for building <br/> SAAS applications</li>
-                        <li>Great ideas for working<br/> on the cloud</li>
+                        <li>General guidelines for building SAAS applications</li>
+                        <li>Great ideas for working on the cloud</li>
                     </ul>
                 </section>
 
@@ -248,24 +241,25 @@
 
                 <section>
                     <h2>Node lifecycle</h2>
-                    <ul>
-                        <li>All nodes boot from same image</li>
-                        <li>Loads configuration from environment and key/value store</li>
-                        <li>Generate  configuration files for processes that need them.</li>
-                    </ul>
+                    <p>
+                      In house solution alternative to Priam from Netflix
+                    </p>
                 </section>
 
                 <section>
                     <ul>
-                        <li>Gathers information about the cluster from cloud provider</li>
-                        <li>If it’s the first node bootstraps the cluster </li>
-                        <li>Joins an existing cluster as a new node or another node’s replacement</li>
-                        <li>Respond to healthcheck to indicate success</li>
+                        <li>Load configuration</li>
+                        <li class="fragment fade-up">Generate configuration files</li>
+                        <li class="fragment fade-up">Gathers information about the cluster from cloud provider</li>
+                        <li class="fragment fade-up">If it’s the first node bootstraps the cluster</li>
+                        <li class="fragment fade-up">Joins an existing cluster as a new node or another node’s replacement</li>
+                        <li class="fragment fade-up">Respond to healthcheck to indicate success</li>
                     </ul>
                 </section>
 
                 <section>
                     <h2>Rolling Updates</h2>
+
                     <ul>
                         <li>Small framework extensible for many cluster types</li>
                         <li>Currently supports Cassandra, Kafka and Zookeeper</li>
@@ -293,11 +287,15 @@
 
                 <section>
                     <ul>
-                        <li>Kills and instance gracefully</li>
-                        <li>Stop receiving connections</li>
-                        <li>Wait for new node to be ready</li>
-                        <li>Wait for the cluster recovery and proceed with next node</li>
+                        <li>Send signal to node to start shutdown</li>
+                        <li class="fragment fade-left">Wait for cleanup and node termination</li>
+                        <li class="fragment fade-left">Wait for new node to be spawn</li>
+                        <li class="fragment fade-left">Wait for the cluster recovery and proceed with next node</li>
                     </ul>
+                </section>
+
+                <section>
+                    <h2>Our tools</h2>
                 </section>
 
                 <section>
