@@ -50,7 +50,7 @@
                 </section>
 
                 <section>
-                    <h1>Salut Bucuresti!</h1>
+                    <h1>Salut București!</h1>
                 </section>
 
                 <section>
@@ -80,7 +80,7 @@
                     <h2>Immutable</h2>
                     <p>
                         <small>
-                            adjective - im·mu·ta·ble - \ (ˌ)i(m)-ˈmyü-tə-bəl \
+                            adjective | im·mu·ta·ble | \ (ˌ)i(m)-ˈmyü-tə-bəl \
                         </small>
                     </p>
                     <p>
@@ -149,18 +149,23 @@
                     </p>
                 </section>
 
-                <section  data-transition="fade-in fade-out">
+                <section data-transition="fade-in fade-out">
                     <ul>
-                        <li>Data that needs to persist must be stored in a stateful backing service</li>
-                        <li>Filesystem of the process can be used as a brief, single-transaction cache</li>
+                        <li>No persistent data between requests</li>
+                        <li>Filesystem can be used as a brief cache</li>
                     </ul>
                 </section>
 
                 <section>
                     <h2>Disposability</h2>
                     <ul>
-                        <li>Processes are disposable, meaning they can be started or stopped at a moment’s notice</li>
-                        <li>Processes shut down gracefully when they receive a SIGTERM</li>
+                        <li>Processes are disposable</li>
+                    </ul>
+                </section>
+
+                <section data-transition="fade">
+                    <ul>
+                        <li>Processes shut down gracefully on SIGTERM</li>
                         <li>Processes should also be robust against sudden death</li>
                     </ul>
                 </section>
@@ -250,16 +255,15 @@
                     <ul>
                         <li>Load configuration</li>
                         <li class="fragment fade-up">Generate configuration files</li>
-                        <li class="fragment fade-up">Gathers information about the cluster from cloud provider</li>
+                        <li class="fragment fade-up">Gathers information about the cluster from cloud</li>
                         <li class="fragment fade-up">If it’s the first node bootstraps the cluster</li>
-                        <li class="fragment fade-up">Joins an existing cluster as a new node or another node’s replacement</li>
+                        <li class="fragment fade-up">Joins an existing cluster as a new node or replacement</li>
                         <li class="fragment fade-up">Respond to healthcheck to indicate success</li>
                     </ul>
                 </section>
 
                 <section>
                     <h2>Rolling Updates</h2>
-
                     <ul>
                         <li>Small framework extensible for many cluster types</li>
                         <li>Currently supports Cassandra, Kafka and Zookeeper</li>
@@ -267,11 +271,20 @@
                 </section>
 
                 <section>
-                    <h2>Update cloud <br/>infrastructure</h2>
                     <ul>
-                        <li>
-                            Deploy infrastructure stack
-                        </li>
+                        <li>Cluster and nodes</li>
+                        <li>Healthchecks at both levels</li>
+                        <li>Implements updating algorithms</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Deploying changes</h2>
+                </section>
+
+                <section>
+                    <h2>Deploy infrastructure stack</h2>
+                    <ul>
                         <li>Create resources, permissions, network rules</li>
                     </ul>
                 </section>
@@ -282,7 +295,6 @@
                         <li>Check cluster health</li>
                         <li>Functional tests + monitoring information</li>
                     </ul>
-
                 </section>
 
                 <section>
@@ -364,17 +376,13 @@
                 </section>
 
                 <section class="thankyou">
-                    <h2>Thank you</h2>
-                    <p>
-                        You can reach me:
-                    </p>
+                    <h2>Mulțumesc</h2>
                     <ul>
                         <li><a href="https://mrdias.com">https://mrdias.com</a></li>
                         <li><a href="https://github.com/diasjorge">@diasjorge</a> on Github</li>
                         <li><a href="https://twitter.com/dias_jorge">@dias_jorge</a> on Twitter</li>
                     </ul>
                 </section>
-
             </div>
 
         </div>
