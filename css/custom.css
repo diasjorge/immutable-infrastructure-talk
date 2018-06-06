@@ -33,7 +33,7 @@
   list-style-type: bullets;
 }
 
-.thankyou ul {
+.thankyou ul, .centered ul {
   margin: 0;
   text-align: center;
 }
