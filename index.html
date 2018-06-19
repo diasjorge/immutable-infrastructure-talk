@@ -50,7 +50,7 @@
                 </section>
 
                 <section>
-                    <h1>Salut București!</h1>
+                    <h1>Hola Barcelona!</h1>
                 </section>
 
                 <section>
@@ -279,6 +279,118 @@
                 </section>
 
                 <section>
+                    <pre><code class="hljs python" data-trim contenteditable>
+def rolling_terminate(cluster):
+    nodes = cluster.nodes
+    for node in cluster.nodes_to_upgrade():
+        cluster.wait_until_healthy()
+        node.terminate()
+    cluster.wait_until_healthy()
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code class="hljs python" data-trim contenteditable>
+class Node(object):
+    def __init__(self, instance_id, session):
+        self.instance_id = instance_id
+
+    def is_healthy(self):
+        return self._instance.state['Name'] != "running":
+
+    def terminate(self):
+        ....
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code class="hljs python" data-trim contenteditable>
+class Cluster(object):
+    def __init__(self, name, session):
+        self.name = name
+
+    def wait_until_healthy(self):
+        while True:
+            if self.asg.capacity == len(self.healthy_nodes) and self.is_healthy():
+                break
+            time.sleep(10)
+
+    def healthy_nodes(self):
+        return [n for n in self.nodes if n.is_healthy()]
+
+    def is_healthy(self):
+        return True
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code class="hljs python" data-trim contenteditable>
+class CassandraNode(Node):
+    def terminate(self):
+        self._disablebinary()
+        self._wait_for_hint_delivery()
+        self._drain_node()
+        super().terminate()
+
+    def is_healthy(self):
+        return super().is_healthy() and \
+               self._check_node_disk_usage() and \
+               self._check_node_hints() and \
+               self._check_node_compactions() and \
+               self._check_service_is_up()
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code class="hljs python" data-trim contenteditable>
+class CassandraCluster(Cluster):
+    node_type = CassandraNode
+
+    def is_healthy(self):
+        ssm_command = "/opt/cassandra/bin/nodetool status | grep -c ^'UN '"
+        health = SSM.run(self.nodes, ssm_command)
+        return all(x == self.asg.capacity and x == len(self.healthy_nodes) \
+               for x in health)
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code class="hljs python" data-trim contenteditable>
+class KafkaNode(Node):
+    def is_healthy(self):
+        return super().is_healthy() and self._kafka_server_is_up()
+
+    def _kafka_server_is_up(self):
+        try:
+            response = requests.get(
+                "http://{}:{}/".format(self.public_dns_name, 8000)
+            )
+            return response.status_code == 200
+        except RequestException:
+            return False
+                    </code></pre>
+                </section>
+
+                <section>
+                    <section>
+                        <pre><code class="hljs python" data-trim contenteditable>
+class KafkaCluster(Cluster):
+    node_type = KafkaNode
+
+    def is_healthy(self):
+        health = [self._get_kafka_cluster_status(node.public_dns_name, port=8000) \
+                  for node in self.nodes]
+        return all(x == "green" for x in health)
+
+    @staticmethod
+    def _get_kafka_cluster_status(server_address, port, timeout):
+        response = requests.get(
+            "http://{}:{}/cluster".format(server_address, port)
+        )
+        return response.json()["status"]
+                        </code></pre>
+                </section>
+                <section>
                     <h2>Deploying changes</h2>
                 </section>
 
@@ -374,7 +486,7 @@
                 </section>
 
                 <section class="thankyou">
-                    <h2>Mulțumesc</h2>
+                    <h2>Gracias</h2>
                     <ul>
                         <li><a href="https://mrdias.com">https://mrdias.com</a></li>
                         <li><a href="https://github.com/diasjorge">@diasjorge</a> on Github</li>
