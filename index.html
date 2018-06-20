@@ -246,19 +246,69 @@
 
                 <section>
                     <h2>Node lifecycle</h2>
-                    <p>
-                        In house solution alternative to Priam from Netflix
-                    </p>
-                </section>
-
-                <section>
                     <ul>
-                        <li>Load configuration</li>
+                        <li class="fragment fade-up">Load configuration</li>
                         <li class="fragment fade-up">Generate configuration files</li>
                         <li class="fragment fade-up">Gathers information about the cluster from cloud</li>
                         <li class="fragment fade-up">If it’s the first node bootstraps the cluster</li>
                         <li class="fragment fade-up">Joins an existing cluster as a new node or replacement</li>
                         <li class="fragment fade-up">Respond to healthcheck to indicate success</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Cassandra - Neoptolemus</h3>
+                    <ul>
+                        <li>In house solution alternative to Priam from Netflix</li>
+                        <li>4000 loc (3500 python)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <pre><code class="hljs python" data-trim contenteditable>
+def _ip_to_replace(self):
+        cassandra_dc = EC2Snitch.get_datacenter()
+        cassandra_rack = EC2Snitch.get_rack()
+        ...
+        dead_nodes = cluster.find_dead_nodes(cassandra_dc, cassandra_rack)
+        ...
+        ips_to_replace = [
+            node.address
+            for node in dead_nodes
+            if not EC2Checks(self.region).is_alive(node.address)
+        ]
+        if len(ips_to_replace) == 0:
+            return None
+        return ips_to_replace[0]
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Zookeeper Cluster</h3>
+                    <pre><code class="hljs bash" data-trim contenteditable>
+function main()
+{
+    genZookeeperConfig "${clustername}" > /etc/zookeeper/zoo.cfg
+    ....
+    enis=$(getAvailableEnis "zookeeper-${clustername}")
+    attachEni "${enis}"
+    ....
+    local myid="$(getEniTag ${eni} ZookeeperId)"
+    echo "${myid}" > /var/lib/zookeeper/myid
+    local myrole="$(getZookeeperRole "${clustername}" "${myid}" )"
+    ....
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Deploying changes</h2>
+                </section>
+
+                <section data-transition="concave">
+                    <h2>Deploy infrastructure stack</h2>
+                    <ul>
+                        <li>Create resources, permissions, network rules</li>
                     </ul>
                 </section>
 
@@ -276,6 +326,16 @@
                         <li>Healthchecks at both levels</li>
                         <li>Implements updating algorithms</li>
                     </ul>
+                </section>
+
+                <section>
+                    <h2>Terminating nodes</h2>
+                        <ul>
+                            <li>Send signal to node to start shutdown</li>
+                            <li class="fragment fade-left">Wait for cleanup and node termination</li>
+                            <li class="fragment fade-left">Wait for new node to be spawn</li>
+                            <li class="fragment fade-left">Wait for the cluster recovery and proceed with next node</li>
+                        </ul>
                 </section>
 
                 <section>
@@ -389,110 +449,83 @@ class KafkaCluster(Cluster):
         )
         return response.json()["status"]
                         </code></pre>
-                </section>
-                <section>
-                    <h2>Deploying changes</h2>
-                </section>
+                    </section>
 
-                <section data-transition="concave">
-                    <h2>Deploy infrastructure stack</h2>
-                    <ul>
-                        <li>Create resources, permissions, network rules</li>
-                    </ul>
-                </section>
+                    <section>
+                        <h2>Our tools</h2>
+                    </section>
 
-                <section data-transition="fade-out">
-                    <h2>Updating instances</h2>
-                    <ul>
-                        <li>Check cluster health</li>
-                        <li>Functional tests + monitoring information</li>
-                    </ul>
-                </section>
+                    <section data-transition="zoom">
+                        <h2>Embrace your cloud provider</h2>
+                        <ul>
+                            <li>We use many AWS services</li>
+                        </ul>
+                    </section>
 
-                <section>
-                    <ul>
-                        <li>Send signal to node to start shutdown</li>
-                        <li class="fragment fade-left">Wait for cleanup and node termination</li>
-                        <li class="fragment fade-left">Wait for new node to be spawn</li>
-                        <li class="fragment fade-left">Wait for the cluster recovery and proceed with next node</li>
-                    </ul>
-                </section>
+                    <section class="centered">
+                        <ul>
+                            <li>Cloudformation</li>
+                            <li>Systems Manager</li>
+                            <li>DynamoDB</li>
+                            <li>KMS</li>
+                            <li>EC2</li>
+                            <li>S3</li>
+                        </ul>
+                    </section>
 
-                <section>
-                    <h2>Our tools</h2>
-                </section>
+                    <section>
+                        <h2>Preparing for disaster</h2>
+                        <p>If you loose customers data you’re in BIG trouble</p>
+                    </section>
 
-                <section data-transition="zoom">
-                    <h2>Embrace your cloud provider</h2>
-                    <ul>
-                        <li>We use many AWS services</li>
-                    </ul>
-                </section>
+                    <section>
+                        <p>
+                            Developed a tool soon to be opensourced for Cassandra Backup
+                        </p>
+                    </section>
 
-                <section class="centered">
-                    <ul>
-                        <li>Cloudformation</li>
-                        <li>Systems Manager</li>
-                        <li>DynamoDB</li>
-                        <li>KMS</li>
-                        <li>EC2</li>
-                        <li>S3</li>
-                    </ul>
-                </section>
+                    <section class="lefty title">
+                        <h2> Summary </h2>
+                    </section>
 
-                <section>
-                    <h2>Preparing for disaster</h2>
-                    <p>If you loose customers data you’re in BIG trouble</p>
-                </section>
+                    <section data-transition="concave">
+                        <h2>
+                            Advantages
+                        </h2>
+                        <ul>
+                            <li>Known state and less deployment failures</li>
+                            <li>Testing infrastructure in isolation is possible</li>
+                            <li>Consistent environments between dev/pre/pro</li>
+                            <li>Easy to rollback</li>
+                        </ul>
+                    </section>
 
-                <section>
-                    <p>
-                        Developed a tool soon to be opensourced for Cassandra Backup
-                    </p>
-                </section>
+                    <section data-transition="concave">
+                        <h2>Trade offs</h2>
+                        <ul>
+                            <li>High up-front investment</li>
+                            <li>Rolling update of a whole cluster takes time</li>
+                        </ul>
+                    </section>
 
-                <section class="lefty title">
-                    <h2> Summary </h2>
-                </section>
+                    <section data-transition="concave-in fade-out">
+                        <h2>Takeaways</h2>
+                        <ul>
+                            <li>Immutable infrastructure is a means to an end not a goal.</li>
+                            <li>It’s not about the tools it’s about the ideas.</li>
+                            <li>You can implement it gradually.</li>
+                            <li>It may not be a good fit for you.</li>
+                        </ul>
+                    </section>
 
-                <section data-transition="concave">
-                    <h2>
-                        Advantages
-                    </h2>
-                    <ul>
-                        <li>Known state and less deployment failures</li>
-                        <li>Testing infrastructure in isolation is possible</li>
-                        <li>Consistent environments between dev/pre/pro</li>
-                        <li>Easy to rollback</li>
-                    </ul>
-                </section>
-
-                <section data-transition="concave">
-                    <h2>Trade offs</h2>
-                    <ul>
-                        <li>High up-front investment</li>
-                        <li>Rolling update of a whole cluster takes time</li>
-                    </ul>
-                </section>
-
-                <section data-transition="concave-in fade-out">
-                    <h2>Takeaways</h2>
-                    <ul>
-                        <li>Immutable infrastructure is a means to an end not a goal.</li>
-                        <li>It’s not about the tools it’s about the ideas.</li>
-                        <li>You can implement it gradually.</li>
-                        <li>It may not be a good fit for you.</li>
-                    </ul>
-                </section>
-
-                <section class="thankyou">
-                    <h2>Gracias</h2>
-                    <ul>
-                        <li><a href="https://mrdias.com">https://mrdias.com</a></li>
-                        <li><a href="https://github.com/diasjorge">@diasjorge</a> on Github</li>
-                        <li><a href="https://twitter.com/dias_jorge">@dias_jorge</a> on Twitter</li>
-                    </ul>
-                </section>
+                    <section class="thankyou">
+                        <h2>Gracias</h2>
+                        <ul>
+                            <li><a href="https://mrdias.com">https://mrdias.com</a></li>
+                            <li><a href="https://github.com/diasjorge">@diasjorge</a> on Github</li>
+                            <li><a href="https://twitter.com/dias_jorge">@dias_jorge</a> on Twitter</li>
+                        </ul>
+                    </section>
             </div>
 
         </div>
