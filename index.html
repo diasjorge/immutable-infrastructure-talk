@@ -266,20 +266,43 @@
 
                 <section>
                     <pre><code class="hljs python" data-trim contenteditable>
+def main():
+    block_devices = storage.get_block_devices_by_priority()
+    storage.create_raid(block_devices)
+    ...
+    seeds_manager = SeedsManager(
+      cluster_name=cluster_name,
+      region=aws_region
+    )
+    seed_ips = seeds_manager.list_seeds_private_ips()
+
+    cassandra_configs = CassandraConfigs(
+        cluster_name=cluster_name,
+        seed_ips=seed_ips,
+        ....
+     )
+     cassandra_configs.generate_cassandra_yaml()
+     cassandra_configs.generate_cassandra_env_extra()
+     ....
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code class="hljs python" data-trim contenteditable>
 def _ip_to_replace(self):
-        cassandra_dc = EC2Snitch.get_datacenter()
-        cassandra_rack = EC2Snitch.get_rack()
-        ...
-        dead_nodes = cluster.find_dead_nodes(cassandra_dc, cassandra_rack)
-        ...
-        ips_to_replace = [
-            node.address
-            for node in dead_nodes
-            if not EC2Checks(self.region).is_alive(node.address)
-        ]
-        if len(ips_to_replace) == 0:
-            return None
-        return ips_to_replace[0]
+    cassandra_dc = EC2Snitch.get_datacenter()
+    cassandra_rack = EC2Snitch.get_rack()
+    ...
+    dead_nodes = cluster.find_dead_nodes(cassandra_dc, cassandra_rack)
+    ...
+    ips_to_replace = [
+        node.address
+        for node in dead_nodes
+        if not EC2Checks(self.region).is_alive(node.address)
+    ]
+    if len(ips_to_replace) == 0:
+        return None
+    return ips_to_replace[0]
                     </code></pre>
                 </section>
 
