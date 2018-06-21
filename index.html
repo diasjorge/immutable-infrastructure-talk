@@ -270,12 +270,8 @@ def main():
     block_devices = storage.get_block_devices_by_priority()
     storage.create_raid(block_devices)
     ...
-    seeds_manager = SeedsManager(
-      cluster_name=cluster_name,
-      region=aws_region
-    )
+    seeds_manager = SeedsManager(cluster_name=cluster_name)
     seed_ips = seeds_manager.list_seeds_private_ips()
-
     cassandra_configs = CassandraConfigs(
         cluster_name=cluster_name,
         seed_ips=seed_ips,
